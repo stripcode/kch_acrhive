@@ -1,0 +1,7 @@
+from app import createAdminApp
+from app.ext import db
+
+app = createAdminApp()
+app.app_context().push()
+db.session.execute("ALTER TABLE `client` ADD COLUMN `payDate` VARCHAR(255) NOT NULL AFTER `penalty`")
+db.session.execute("UPDATE`client` SET `payDate` =''")

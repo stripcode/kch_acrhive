@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="kch" default="main" basedir=".">
+  <property name="BUILD_DIR" value="${basedir}/build/"/>
+
+
+
+  <!--  Файлы и папки необходимые для продкашена.
+        Используется tar задаче -->
+  <fileset id="app" dir="${basedir}">
+    <!-- Folders -->
+    <exclude name="builds/**"/>
+    <exclude name="src/static/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <include name="src/**"/>
+  </fileset>
+
+
+
+  <!-- Сборка проекта на продкашн -->
+  <target name="main"  depends="clean, admin_webpack, client_webpack, tar">
+  </target>
+
+
+
+  <!-- Зачищает дирикторию где собирается проект
+       т.к. иногда попадают уже удаленные и неиспользуемые файлы-->
+  <target name="clean">
+    <delete failonerror="true">
+      <fileset dir="${BUILD_DIR}" includes="**/**"/>
+    </delete>
+  </target>
+
+  <target name="admin_webpack">
+    <exec executable="webpack" failonerror="true">
+      <arg value="-p"/>
+      <arg value="--config"/>
+      <arg value="webpack.admin.config.js"/>
+    </exec>
+  </target>
+
+  <target name="client_webpack">
+    <exec executable="webpack" failonerror="true">
+      <arg value="-p"/>
+      <arg value="--config"/>
+      <arg value="webpack.client.config.js"/>
+    </exec>
+  </target>
+
+  <!--
+    Деплой билда на сервак.
+    Использует внешнюю библиотеку. В документации описано https://ant.apache.org/manual/Tasks/scp.html
+  -->
+  <target name="deploy" depends="main">
+    <scp file="${BUILD_DIR}/${ant.project.name}.tar.gz" trust="true" todir="user@example.ru:/home/pogromist/" port="2222" keyfile="~/.ssh/kch" verbose="true"/>
+  </target>
+
+  <!-- Архивирует папку билда -->
+  <target name="tar">
+    <mkdir dir="${BUILD_DIR}" />
+    <tar destfile="${BUILD_DIR}/${ant.project.name}.tar.gz" compression="gzip">
+      <fileset refid="app"/>
+    </tar>
+  </target>
+</project>

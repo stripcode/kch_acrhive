@@ -1,0 +1,11 @@
+flask
+flask_login
+flask_sqlalchemy
+marshmallow_sqlalchemy
+pymysql
+gevent
+dbf
+celery
+celery[redis]
+flask_redis
+redis

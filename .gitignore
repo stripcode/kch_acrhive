@@ -1,0 +1,6 @@
+/build
+node_modules
+src/flask/app/admin_static/
+src/flask/app/client_static/
+__pycache__
+.DS_Store

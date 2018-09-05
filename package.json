@@ -1,0 +1,21 @@
+{
+  "name": "kch",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "babel-loader": "*",
+    "babel-core": "*",
+    "webpack": "*",
+    "jquery": "*",
+    "moment": "*",
+    "eonasdan-bootstrap-datetimepicker": "*",
+    "css-loader": "*",
+    "style-loader": "*",
+    "file-loader": "*",
+    "extract-text-webpack-plugin": "4.0.0-beta.0",
+    "font-awesome": "*",
+    "bootstrap": "*",
+    "inputmask": "*"
+  },
+  "license": "http://example.ru"
+}
